@@ -1,6 +1,6 @@
 # Import scrapy library
 import scrapy
-import csv
+# import csv
 import pandas as pd
 
 url_prefix = 'https://www.indeed.com'
@@ -17,10 +17,11 @@ class YourSpider(scrapy.Spider):
     def parse(self, response):
         filename = './indeed_pandas.csv'        
         links = response.css('a.jobtitle.turnstileLink::attr(href)').extract()
-        
-        links = [url_prefix + link for link in links]
+        links = links + response.css('h2.jobtitle > a::attr(href)').extract()
         titles = response.css('a.jobtitle.turnstileLink::attr(title)').extract()
-
+        titles = titles + response.css('h2.jobtitle > a::attr(title)').extract()        
+        links = ['https://www.indeed.com' + link for link in links]
+        
         df = pd.DataFrame(data={'title':titles, 'link':links})
         df.to_csv(filename, sep=',', index=False)
 
@@ -33,3 +34,6 @@ class YourSpider(scrapy.Spider):
         #         link = url_prefix + link
         #         wr.writerow([link])
         self.log('Saved file')
+
+    def parse_job_page(self, response):
+        pass

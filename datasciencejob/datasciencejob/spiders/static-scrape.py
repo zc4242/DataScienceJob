@@ -8,11 +8,17 @@ url = 'https://www.indeed.com/jobs?q=data+science&l=Research+Triangle+Park,+NC&s
 
 html = requests.get(url).content
 
-sel = Selector(text=html)
-links = sel.css('a.jobtitle.turnstileLink::attr(href)').extract()
-sel.css('h2.jobtitle > a::attr(herf)').extract()
+response = Selector(text=html)
 
-filename = './indeed1.csv'
+links = response.css('a.jobtitle.turnstileLink::attr(href)').extract()
+links = links + response.css('h2.jobtitle > a::attr(href)').extract()
+titles = response.css('a.jobtitle.turnstileLink::attr(title)').extract()
+titles = titles + response.css('h2.jobtitle > a::attr(title)').extract()
+        
+linksr = ["https://www.indeed.com" + link for link in links]
+
+
+filename = './indeed_test.csv'
 
 with open(filename, 'w', newline='') as f:
     wr = csv.writer(f)

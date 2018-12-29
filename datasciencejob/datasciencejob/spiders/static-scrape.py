@@ -5,6 +5,7 @@ from scrapy import Selector
 url_prefix = 'https://www.indeed.com'
 url_nopage = 'https://www.indeed.com/jobs?q=data+science&l=Research+Triangle+Park%2C+NC'
 url = 'https://www.indeed.com/jobs?q=data+science&l=Research+Triangle+Park,+NC&start=10'
+
 html = requests.get(url).content
 
 sel = Selector(text=html)

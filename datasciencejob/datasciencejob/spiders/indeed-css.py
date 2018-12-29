@@ -17,11 +17,15 @@ class YourSpider(scrapy.Spider):
     def parse(self, response):
         filename = './indeed_pandas.csv'        
         links = response.css('a.jobtitle.turnstileLink::attr(href)').extract()
+        
         links = [url_prefix + link for link in links]
         titles = response.css('a.jobtitle.turnstileLink::attr(title)').extract()
 
         df = pd.DataFrame(data={'title':titles, 'link':links})
         df.to_csv(filename, sep=',', index=False)
+
+        with open('./indeed.html', 'wb') as f:
+            f.write(response.body)
 
         # with open(filename, 'w', newline='') as f:
         #     wr = csv.writer(f)

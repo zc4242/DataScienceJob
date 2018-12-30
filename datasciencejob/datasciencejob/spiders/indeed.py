@@ -11,10 +11,11 @@ class YourSpider(scrapy.Spider):
     name = "indeed"
     # start_requests method
     def start_requests(self):
-        urls = ['https://www.indeed.com/jobs?q=data+science&l=Research+Triangle+Park,+NC&start=']
+        urls = ['https://www.indeed.com/jobs?q=data+science&l=US&start=',
+        ]
 
         for url in urls:
-            for i in range(0,10,10):
+            for i in range(0,100000,10):
                 url_ = url + str(i)
                 yield scrapy.Request(url=url_, callback=self.parse)
     
@@ -23,8 +24,6 @@ class YourSpider(scrapy.Spider):
 
         links = response.css('a.jobtitle::attr(href)').extract()
         links = links + response.css('h2.jobtitle > a::attr(href)').extract()
-        links = links + response.css('h1.jobtitle > a::attr(href)').extract() 
-        links = links + response.css('h3.jobtitle > a::attr(href)').extract()     
         links = ['https://www.indeed.com' + link for link in links]
         
         for link in links:

@@ -4,6 +4,7 @@ import scrapy
 import pandas as pd
 
 url_prefix = 'https://www.indeed.com'
+
 # Create the spider class
 class YourSpider(scrapy.Spider):
     name = "indeed"
@@ -40,4 +41,10 @@ class YourSpider(scrapy.Spider):
         self.log('Saved file')
 
     def parse_job_page(self, response):
-        pass
+        yield {
+            'title': response.css('h3.icl-u-xs-mb--xs.icl-u-xs-mt--none.jobsearch-JobInfoHeader-title::text').extract(),
+            'company': response.css('div.icl-u-lg-mr--sm.icl-u-xs-mr--xs::text').extract(),
+            'location': response.css('div.jobsearch-DesktopStickyContainer-companyrating ::text').extract(),
+            'desc': response.css('div.jobsearch-JobComponent-description ::text').extract(),
+            'link': response.url
+            }

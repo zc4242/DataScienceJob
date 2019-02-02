@@ -3,3 +3,13 @@
 .DS_Store
 .vscode
 **/scrapy-US*
+datasciencejob/scrapy-bs4-10-1.json
+datasciencejob/scrapy-bs4-10.json
+datasciencejob/scrapy-bs4-1000.json
+datasciencejob/scrapy-bs4-all.json
+datasciencejob/scrapy-bs4.json
+datasciencejob/scrapy-NC.json
+datasciencejob/scrapy-US_100K.json
+datasciencejob/scrapy-USA.json
+datasciencejob/scrapy_test.json
+datasciencejob/states.json
